@@ -1,4 +1,10 @@
+// =========================================================
+// [MAHIYA - SOAL 1] Bagian Import Asli
+// =========================================================
 import '../models/sesi_pengguna.dart';
+
+// [DIMAS - SOAL 2] Tambahan Import untuk debugPrint
+import 'package:flutter/material.dart'; 
 
 /// Kegagalan autentikasi yang aman ditampilkan ke pengguna.
 class AuthException implements Exception {
@@ -11,7 +17,16 @@ class AuthException implements Exception {
 
 /// API login tiruan: tidak menyentuh jaringan, hasilnya deterministik.
 class AuthApi {
-  // Kredensial demo ditulis terbuka karena memang dummy.
+  
+  // =========================================================
+  // [DIMAS - SOAL 2] Tambahan: Variabel Counter
+  // =========================================================
+  int jumlahPanggilan = 0; 
+  // =========================================================
+
+  // =========================================================
+  // [MAHIYA - SOAL 1] Kredensial & Konfigurasi Asli
+  // =========================================================
   static const String emailDemo = 'student@trpl.test';
   static const String sandiDemo = 'belajar123';
   static const String emailTerkunci = 'terkunci@trpl.test';
@@ -19,13 +34,25 @@ class AuthApi {
 
   /// Jeda buatan supaya keadaan "memproses" benar-benar terlihat.
   final Duration tunda;
-  const AuthApi({this.tunda = const Duration(milliseconds: 700)});
+  AuthApi({this.tunda = const Duration(milliseconds: 700)});
+  // =========================================================
 
+
+  // =========================================================
+  // [MAHIYA - SOAL 1] Fungsi Login Utama & [DIMAS - SOAL 2] Tambahan Counter
+  // =========================================================
   Future<SesiPengguna> masuk({
     required String email,
     required String sandi,
     Duration masaBerlaku = const Duration(hours: 2),
   }) async {
+    
+    // --- [DIMAS - SOAL 2] Tambahan Counter Eksperimen A ---
+    jumlahPanggilan++;
+    debugPrint('>>> API masuk() dipanggil. Total: $jumlahPanggilan kali');
+    // -------------------------------------------------------
+
+    // --- [MAHIYA - SOAL 1] Mulai Validasi Login ---
     await Future<void>.delayed(tunda);
 
     final String emailBersih = email.trim().toLowerCase();
@@ -69,6 +96,7 @@ class AuthApi {
       masukPada: mulai.toIso8601String(),
       kedaluwarsaPada: mulai.add(masaBerlaku).toIso8601String(),
     );
+    // --- [MAHIYA - SOAL 1] Selesai Validasi ---
   }
 
   /// Memperbarui masa berlaku sesi — meniru "refresh token".

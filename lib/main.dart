@@ -19,8 +19,7 @@ class _Modul06AppState extends State<Modul06App> {
   late final SesiMemori _sesiMemori = SesiMemori();
   
   // Pake jeda 2 detik biar lo bisa liat state "Memproses..." di tombolnya
-  late final AuthApi _api = const AuthApi(tunda: Duration(seconds: 2));
-
+  late final AuthApi _api = AuthApi(tunda: const Duration(milliseconds: 900));
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
